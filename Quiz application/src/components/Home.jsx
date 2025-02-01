@@ -13,12 +13,21 @@ export default function Home(){
 
   const handleLogin =(e)=>{
     e.preventDefault();
-    if(username === "admin" && password === "password123"){
+    try{
+      const response= fetch('https://tortoiseshell-large-bed.glitch.me/login',{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+        },
+        body:JSON.stringify({username,password}),
+      });
+      if(!response.ok) throw new Error ("Login failed");
       login(username);
       navigate("/quiz");
-    }else{
-      setError("Invalid credentials Use admin/password");
+    }catch(err){
+      setError(err.message);
     }
+    
   };
 
   return(
